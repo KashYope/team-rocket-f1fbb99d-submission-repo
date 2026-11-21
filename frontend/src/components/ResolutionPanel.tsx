@@ -34,7 +34,8 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
     );
   }
 
-  const scenarios = response.scenarios || [];
+  const scenarios = response.scenarios ?? [];
+  const auditLog = response.auditLog ?? [];
   const activeScenario: ScenarioCard | undefined =
     scenarios.find((s) => s.id === selectedScenarioId) || scenarios[0];
 
@@ -188,9 +189,9 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
                   </ul>
                 </div>
 
-                {(card.guardrailNotes || []).length > 0 && (
+                {(card.guardrailNotes ?? []).length > 0 && (
                   <div className="mt-2.5 pt-2 border-t border-slate-200 space-y-1">
-                    {card.guardrailNotes.map((note, idx) => (
+                    {(card.guardrailNotes ?? []).map((note, idx) => (
                       <div
                         key={idx}
                         className={`rounded px-1.5 py-1 text-[10px] leading-tight ${
@@ -250,7 +251,7 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
-              Audit Trail ({response.auditLog.length})
+              Audit Trail ({auditLog.length})
             </button>
           </div>
 
@@ -305,7 +306,7 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
               data-testid="audit-log-content"
               className="space-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-[11px] text-slate-800"
             >
-              {response.auditLog.map((entry, idx) => (
+              {auditLog.map((entry, idx) => (
                 <li
                   key={idx}
                   className={`rounded px-2 py-1 ${

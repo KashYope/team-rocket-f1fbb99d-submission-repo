@@ -33,19 +33,22 @@ export default function App() {
   const [presets, setPresets] = useState<DemoPreset[]>([]);
   const [fleet, setFleet] = useState<FleetState | null>(null);
   const [activePresetId, setActivePresetId] = useState<string>("");
-  const [request, setRequest] = useState<IncidentRequest>(
-    new IncidentRequest({
-      trainId: "401",
-      route: RouteCode.RouteMilan,
-      issueType: "FLAT_WHEEL",
-      causeCategory: "OPERATOR_TECH",
-      expectedDelayMin: 95,
-      affectedCar: "56 (RDC WL33)",
-      affectedPax: 30,
-      avgTicketEur: 165,
-      hasPetPrivateComp: true,
-    })
-  );
+  const [request, setRequest] = useState<IncidentRequest>({
+    presetId: "",
+    trainId: "401",
+    route: RouteCode.RouteMilan,
+    issueType: "FLAT_WHEEL",
+    causeCategory: "OPERATOR_TECH",
+    expectedDelayMin: 95,
+    affectedCar: "56 (RDC WL33)",
+    affectedPax: 30,
+    avgTicketEur: 165,
+    hasPrmPax: false,
+    hasPetPrivateComp: true,
+    hasWomenOnlyComp: false,
+    simulateUnfilteredAi: false,
+    extraInfo: "",
+  });
   const [response, setResponse] = useState<IncidentResponse | null>(null);
   const [selectedScenarioId, setSelectedScenarioId] =
     useState<string>("PAX_FIRST");
@@ -77,10 +80,11 @@ export default function App() {
           GetFleetState(),
         ]);
         if (!mounted) return;
-        setPresets(loadedPresets);
+        const safePresets = loadedPresets ?? [];
+        setPresets(safePresets);
         setFleet(loadedFleet);
-        if (loadedPresets.length > 0) {
-          const initial = loadedPresets[0];
+        if (safePresets.length > 0) {
+          const initial = safePresets[0];
           setActivePresetId(initial.id);
           setRequest(initial.request);
           await runAnalysis(initial.request);
@@ -98,20 +102,20 @@ export default function App() {
   }, [runAnalysis]);
 
   const handleSelectPreset = (preset: DemoPreset) => {
-    const nextReq = new IncidentRequest({
+    const nextReq: IncidentRequest = {
       ...preset.request,
       simulateUnfilteredAi: false,
-    });
+    };
     setActivePresetId(preset.id);
     setRequest(nextReq);
     void runAnalysis(nextReq);
   };
 
   const handleToggleUnfilteredDemo = (enabled: boolean) => {
-    const nextReq = new IncidentRequest({
+    const nextReq: IncidentRequest = {
       ...request,
       simulateUnfilteredAi: enabled,
-    });
+    };
     setRequest(nextReq);
     void runAnalysis(nextReq);
   };
@@ -148,16 +152,14 @@ export default function App() {
           <div className="flex flex-wrap items-center gap-2 text-[11px]">
             <span
               data-testid="badge-laya-source"
-              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-bold uppercase tracking-wide border ${
-                layaIsLive
+              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-bold uppercase tracking-wide border ${layaIsLive
                   ? "border-emerald-500/40 bg-emerald-500/20 text-emerald-300"
                   : "border-sky-500/40 bg-sky-500/15 text-sky-300"
-              }`}
+                }`}
             >
               <span
-                className={`h-2 w-2 rounded-full ${
-                  layaIsLive ? "bg-emerald-400" : "bg-sky-400"
-                }`}
+                className={`h-2 w-2 rounded-full ${layaIsLive ? "bg-emerald-400" : "bg-sky-400"
+                  }`}
               />
               {layaIsLive ? "LAYA LIVE" : "LAYA MOCK"}
               {response?.laya ? (
@@ -169,16 +171,14 @@ export default function App() {
 
             <span
               data-testid="badge-gemini-source"
-              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-bold uppercase tracking-wide border ${
-                geminiIsLive
+              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-bold uppercase tracking-wide border ${geminiIsLive
                   ? "border-emerald-500/40 bg-emerald-500/20 text-emerald-300"
                   : "border-amber-500/40 bg-amber-500/15 text-amber-300"
-              }`}
+                }`}
             >
               <span
-                className={`h-2 w-2 rounded-full ${
-                  geminiIsLive ? "bg-emerald-400" : "bg-amber-400"
-                }`}
+                className={`h-2 w-2 rounded-full ${geminiIsLive ? "bg-emerald-400" : "bg-amber-400"
+                  }`}
               />
               {geminiIsLive ? "GEMINI LIVE" : "GEMINI MOCK"}
               {response?.geminiModel ? (

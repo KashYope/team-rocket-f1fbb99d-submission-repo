@@ -39,7 +39,10 @@ export const TriageGuardrailsPanel: React.FC<TriageGuardrailsPanelProps> = ({
     );
   }
 
-  const { laya, eu2021782, ruleChecks, eligibleSpares, rejectedSpares } = response;
+  const { laya, eu2021782 } = response;
+  const checks = response.ruleChecks ?? [];
+  const eligible = response.eligibleSpares ?? [];
+  const rejected = response.rejectedSpares ?? [];
   const isAuto = laya.routingGate === "AUTO_CANDIDATE";
   const probs = laya.recoveryStrategy.probabilities || {};
   const nearestSevIdx = Math.min(3, Math.max(0, Math.round(laya.operationalSeverity.score)));
@@ -270,7 +273,7 @@ export const TriageGuardrailsPanel: React.FC<TriageGuardrailsPanelProps> = ({
         </h2>
 
         <div className="flex flex-col gap-1.5">
-          {ruleChecks.map((chk) => {
+          {checks.map((chk) => {
             const badgeStyle =
               chk.severity === "BLOCK"
                 ? "bg-rose-600 text-white"
@@ -309,11 +312,11 @@ export const TriageGuardrailsPanel: React.FC<TriageGuardrailsPanelProps> = ({
         {/* Eligible & Rejected Spare Pool */}
         <div className="mt-3 pt-2.5 border-t border-slate-200">
           <div className="text-[11px] font-bold uppercase tracking-wide text-slate-700 mb-1.5">
-            Parked Spare Fleet ({eligibleSpares.length} Eligible · {rejectedSpares.length} Blocked)
+            Parked Spare Fleet ({eligible.length} Eligible · {rejected.length} Blocked)
           </div>
 
           <div className="flex flex-col gap-1">
-            {eligibleSpares.map((car) => (
+            {eligible.map((car) => (
               <div
                 key={car.uic}
                 className="flex items-center justify-between rounded border border-emerald-200 bg-emerald-50/60 px-2 py-1 text-[11px]"
@@ -330,7 +333,7 @@ export const TriageGuardrailsPanel: React.FC<TriageGuardrailsPanelProps> = ({
               </div>
             ))}
 
-            {rejectedSpares.map((car) => (
+            {rejected.map((car) => (
               <div
                 key={car.uic}
                 data-testid={`rejected-spare-${car.owner}-${car.carType.replace(/\s+/g, "-")}`}

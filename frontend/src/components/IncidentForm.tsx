@@ -36,25 +36,21 @@ export const IncidentForm: React.FC<IncidentFormProps> = ({
     key: K,
     value: IncidentRequest[K]
   ) => {
-    onChangeRequest(
-      new IncidentRequest({
-        ...request,
-        presetId: "CUSTOM",
-        [key]: value,
-      })
-    );
+    onChangeRequest({
+      ...request,
+      presetId: "CUSTOM",
+      [key]: value,
+    });
   };
 
   const handleRouteChange = (newRouteStr: string) => {
     const routeEnum = newRouteStr as RouteCode;
-    onChangeRequest(
-      new IncidentRequest({
-        ...request,
-        presetId: "CUSTOM",
-        route: routeEnum,
-        trainId: ROUTE_DEFAULT_TRAIN[newRouteStr] || request.trainId,
-      })
-    );
+    onChangeRequest({
+      ...request,
+      presetId: "CUSTOM",
+      route: routeEnum,
+      trainId: ROUTE_DEFAULT_TRAIN[newRouteStr] || request.trainId,
+    });
   };
 
   return (
