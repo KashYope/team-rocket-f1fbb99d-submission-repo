@@ -1,0 +1,4 @@
+import {AbsoluteFill} from "remotion";
+import {DeckShell, Pill, Rise} from "./DeckShell";
+
+export const ClosingDeckScene: React.FC = () => <AbsoluteFill><DeckShell eyebrow="ES Incident Command"><div style={{position: "absolute", left: 90, right: 90, top: 275, textAlign: "center"}}><Rise><div style={{fontSize: 120, fontWeight: 820, letterSpacing: -5}}>Ready for live demo.</div></Rise><Rise delay={0.4}><div style={{fontSize: 35, color: "#CBD5E1", marginTop: 30}}>Deterministic rail safety · calibrated System 1 triage · actionable System 2 dispatch</div></Rise><Rise delay={0.8} style={{display: "flex", justifyContent: "center", gap: 18, marginTop: 56}}><Pill color="#10B981">Safe by design</Pill><Pill color="#F59E0B">Offline fallback</Pill><Pill color="#38BDF8">Human approved</Pill></Rise></div></DeckShell></AbsoluteFill>;

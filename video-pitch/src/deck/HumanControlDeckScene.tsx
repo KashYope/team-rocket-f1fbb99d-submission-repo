@@ -1,0 +1,4 @@
+import {AbsoluteFill} from "remotion";
+import {DeckShell, Rise} from "./DeckShell";
+
+export const HumanControlDeckScene: React.FC = () => <AbsoluteFill><DeckShell eyebrow="Human control"><div style={{position: "absolute", left: 90, right: 90, top: 250, display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: 80, alignItems: "center"}}><Rise><div style={{fontSize: 94, lineHeight: 1.02, fontWeight: 800, letterSpacing: -4}}>AI assists.<br /><span style={{color: "#10B981"}}>People decide.</span></div></Rise><Rise delay={0.45}><div style={{fontSize: 31, lineHeight: 1.62, color: "#CBD5E1"}}>No autonomous diagnosis.<br />No declaration of fitness to run.<br />No safety-rule override.<br />No external data transfer by default.<br /><br /><strong style={{color: "white"}}>Every recommendation remains reviewable, sourced and reversible.</strong></div></Rise></div></DeckShell></AbsoluteFill>;

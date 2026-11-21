@@ -1,0 +1,21 @@
+European Sleeper runs night trains across Europe. But when one carriage fails, the whole plan can move.
+
+Around seventy leased and owned carriages rotate across three lines from Brussels: Prague, Paris and Milan. Today, the operating plan lives in a hand-typed, colour-coded spreadsheet. Status can be hidden in a cell colour. Names vary. Formulas drift. And there is no automatic rule check or change log.
+
+A field report is never just a technical issue. It can affect safety procedures, country approvals, train length, door orientation, high voltage, workshop deadlines, passengers and the next service. Under pressure, the duty manager must reconstruct the facts, compare possible actions and explain the decision.
+
+Our system turns that process into an auditable decision pipeline.
+
+First: evidence. We preserve the raw report, spreadsheet cell, colour, comment, timestamp and source. Unknown stays unknown.
+
+Second: deterministic rules. Code checks every candidate action against country compatibility, train length, product allocation, doors, high voltage, shunting restrictions, maintenance status and duplicate assignments. If a critical fact is missing, the result is not compliant. It is unverified, and the case escalates.
+
+Third: assisted ranking. The rules create the admissible actions. Jev cannot invent them. It only answers typed questions: category, urgency, sufficiency, escalation risk and the ranking of prevalidated options.
+
+The duty screen shows the report, declared urgency, rule status, missing information, the recommended next step and every admissible alternative. Each statement links back to the exact report, source cell, rule version or validated precedent. Facts, estimates and assumptions are never mixed.
+
+And the boundary is explicit. AI never diagnoses a fault, declares a carriage fit to run, overrides a safety rule or assumes a repair happened. The authorised person makes the final decision and records why.
+
+For the hackathon, we deliver a local, synthetic-data MVP in observation mode: faster triage, fewer unnecessary shunting moves and transports, and a complete decision trail.
+
+European Sleeper can move from spreadsheet chaos to explainable, auditable decisions — while keeping people firmly in control.
